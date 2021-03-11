@@ -16,9 +16,32 @@ label {
   display: block;
 }
 
+nav {
+  background-color: #5f506b;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  padding: 0px 15px;
+}
+
+.navItemContainer {
+  flex-direction: row;
+}
+
 nav a {
   display: inline-block;
   margin: 1em;
+  display: flex;
+  text-decoration: none;
+  flex-direction: row;
+  justify-content: space-around;
+  text-decoration: none;
+  align-items: center;
 }
 
 form div {
