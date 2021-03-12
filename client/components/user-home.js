@@ -2,17 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Map from './map'
+import Sidebar from './sidebar'
 
 /**
  * COMPONENT
  */
 export const UserHome = props => {
-  const {email} = props
-
   return (
     <div>
-      <h3>Welcome, {email}</h3>
       <Map />
+      <Sidebar />
     </div>
   )
 }

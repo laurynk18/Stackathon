@@ -4,6 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, Landing} from './components'
 import {me} from './store'
+import {fetchPlaces} from './store/place'
 
 /**
  * COMPONENT
@@ -50,6 +51,7 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      //dispatch(fetchPlaces())
     }
   }
 }

@@ -541,11 +541,11 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   will-change: transform;
   opacity: 1;
   transition: opacity 0.2s;
-  width: 25px;
-  height: 25px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   border: 1px solid gray;
-  background-color: coral;
+  background-color: red;
 }
 .mapboxgl-marker-occluded {
   opacity: 0.2;

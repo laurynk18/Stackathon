@@ -4,26 +4,54 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, email}) => (
   <div>
-    <nav className="header">
+    <nav>
       {isLoggedIn ? (
-        <div className="navItemContainer">
-          <h1>PinEat</h1>
+        <ul className="navItems">
+          <div className="nav-left">
+            <li>
+              <h1 className="logo">
+                <Link to="/home">
+                  P<span>i</span>nEat
+                </Link>
+              </h1>
+            </li>
+          </div>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Map</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
+          <div className="nav-right">
+            <li>
+              <h1>
+                <Link to="/home">Saved Places</Link>
+              </h1>
+            </li>
+            <li>
+              <h1>
+                <a href="#" style={{float: 'right'}} onClick={handleClick}>
+                  Logout
+                </a>{' '}
+              </h1>
+            </li>
+          </div>
+        </ul>
       ) : (
-        <div className="navItemContainer">
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
+        <ul className="navItems">
+          <li style={{float: 'right'}}>
+            <Link to="/login">Login</Link>
+          </li>
+          <li style={{float: 'right'}}>
+            <Link to="/signup">Sign Up</Link>
+          </li>
+        </ul>
       )}
     </nav>
+    {email ? (
+      <div className="welcome-container">
+        <p className="welcome">Welcome, {email}! </p>
+      </div>
+    ) : (
+      ''
+    )}
     <hr />
   </div>
 )
@@ -33,7 +61,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    email: state.user.email
   }
 }
 
