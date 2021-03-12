@@ -1,4 +1,6 @@
+const webpack = require('webpack')
 const isDev = process.env.NODE_ENV === 'development'
+//const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
@@ -22,8 +24,19 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/env', '@babel/react']
+        }
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
       }
     ]
   }
+  // plugins: [
+  //   new HtmlWebpackPlugin({title: 'react-map-gl Example'}),
+  //   new webpack.EnvironmentPlugin(['MapboxAccessToken'])
+  // ]
 }
