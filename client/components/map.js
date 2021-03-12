@@ -1,92 +1,108 @@
-import React, {useState, useRef, useCallback} from 'react'
-import ReactMapGl, {Popup} from 'react-map-gl'
-//import Geocoder from 'react-mapbox-gl-geocoder'
+import React, {Component} from 'react'
+import ReactMapGl, {Marker, Popup, NavigationControl} from 'react-map-gl'
+import {fetchPlaces} from '../store/place'
 import Geocoder from 'react-map-gl-geocoder'
-//import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
-//import 'mapbox-gl/dist/mapbox-gl.css'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Pin} from './pin'
 
 const token =
   'pk.eyJ1IjoibGF1cnluYXByOTkiLCJhIjoiY2trZThhNzRhMDN2NjMwcGVjMHA4bG5kZSJ9.adHA-Pgnztq28O9TKW0SHQ'
 
-// const queryParams = {
-//   country: 'us',
-// }
-
-export function Map() {
-  const [viewport, setViewport] = useState({
-    width: '100vw',
-    height: '80vh',
-    latitude: 40.78343,
-    longitude: -73.96625,
-    zoom: 11
-  })
-  const mapRef = useRef()
-
-  //Receives selected item and the viewport to set for the selected item
-  // const onSelected = useCallback((nextViewport, item) => {
-  //   setViewport(nextViewport)
-  //   console.log('Selected item:', item)
-  // })
-
-  const handleViewportChange = useCallback(
-    newViewport => setViewport(newViewport),
-    []
-  )
-
-  // locates search result on map
-  const handleGeocoderViewportChange = useCallback(newViewport => {
-    const geocoderDefaultOverrides = {transitionDuration: 1000}
-
-    return handleViewportChange({
-      ...newViewport,
-      ...geocoderDefaultOverrides
-    })
-  }, [])
-
-  //handles search result
-  const handleOnResult = useCallback(result => {
-    console.log(result)
-  })
-
-  return (
-    <div>
-      {/* <Geocoder
-        ref={mapRef}
-        viewport={viewport}
-        onSelected={onSelected}
-        mapboxApiAccessToken={token}
-        hideOnSelect={true}
-        queryParams={queryParams}
-        position="top-right"
-        value=""
-      /> */}
-      <ReactMapGl
-        ref={mapRef}
-        {...viewport}
-        onViewportChange={nextViewport => setViewport(nextViewport)}
-        mapboxApiAccessToken={token}
-        mapStyle="mapbox://styles/mapbox/streets-v10"
-      >
-        <Geocoder
-          mapRef={mapRef}
-          onViewportChange={handleGeocoderViewportChange}
-          onResult={handleOnResult}
-          mapboxApiAccessToken={token}
-          countries="us"
-          marker="true"
-          position="top-left"
-        />
-      </ReactMapGl>
-    </div>
-  )
+const navControlStyle = {
+  right: 30,
+  bottom: 10
 }
 
-// const mapStateToProps = state => ({
-// })
+//get data from db, pass as props to sidebar, marker, popup
 
-// const mapDispatchToProps = (dispatch, {history}) => {
-// }
+class Map extends Component {
+  constructor() {
+    super()
+    this.state = {
+      viewport: {
+        width: '100vw',
+        height: '80vh',
+        latitude: 40.78343,
+        longitude: -73.96625,
+        zoom: 11
+      }
+    }
+    this.handleGeocoderViewportChange = this.handleGeocoderViewportChange.bind(
+      this
+    )
+    this.handleViewportChange = this.handleViewportChange.bind(this)
+    this.handleOnResult = this.handleOnResult.bind(this)
+  }
+  componentDidMount() {
+    this.props.loadPlaces()
+  }
+  mapRef = React.createRef()
+  handleViewportChange = viewport => {
+    this.setState(prevState => ({
+      viewport: {...prevState.viewport, ...viewport}
+    }))
+  }
 
-//export default connect(mapStateToProps, mapDispatchToProps)(Map)
+  //locates search result on map
+  // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
+  handleGeocoderViewportChange = viewport => {
+    const geocoderDefaultOverrides = {transitionDuration: 1000}
+
+    return this.handleViewportChange({
+      ...viewport,
+      ...geocoderDefaultOverrides
+    })
+  }
+  handleOnResult(result) {
+    console.log(result)
+  }
+  render() {
+    return (
+      <div>
+        {this.props.places && (
+          <ReactMapGl
+            ref={this.mapRef}
+            {...this.state.viewport}
+            onViewportChange={viewport => this.setState({viewport})}
+            mapboxApiAccessToken={token}
+            mapStyle="mapbox://styles/mapbox/streets-v10"
+          >
+            {/* <Marker latitude={40.785091} longitude={-73.968285} /> */}
+            {this.props.places.length ? (
+              this.props.places.map(place => (
+                <Pin
+                  key={place.id}
+                  place={place}
+                  latitude={place.location[0]}
+                  longitude={place.location[1]}
+                />
+              ))
+            ) : (
+              <div>Loading...</div>
+            )}
+            <Geocoder
+              mapRef={this.mapRef}
+              onResult={this.handleOnResult}
+              onViewportChange={this.handleGeocoderViewportChange}
+              mapboxApiAccessToken={token}
+              countries="us"
+              marker={true} //or render new Marker --> onResult
+              position="top-right"
+            />
+            <NavigationControl style={navControlStyle} />
+          </ReactMapGl>
+        )}
+      </div>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  places: state.place
+})
+
+const mapDispatchToProps = dispatch => ({
+  loadPlaces: () => dispatch(fetchPlaces())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map)

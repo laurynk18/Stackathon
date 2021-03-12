@@ -6,5 +6,7 @@
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {Landing} from './landing'
-export {Map} from './map'
+export {default as Map} from './map'
+export {Pin} from './pin'
+export {default as Pins} from './pins'
 export {Login, Signup} from './auth-form'
