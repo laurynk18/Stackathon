@@ -21,4 +21,10 @@ const Place = db.define('place', {
   tag: Sequelize.ARRAY(Sequelize.STRING)
 })
 
+Place.beforeCreate(place => {
+  if (!Array.isArray(place.tag)) {
+    place.tag = [place.tag]
+  }
+})
+
 module.exports = Place

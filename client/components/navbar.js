@@ -22,7 +22,7 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
           <div className="nav-right">
             <li>
               <h1>
-                <Link to="/home">Saved Places</Link>
+                <Link to="/saved-places">Saved</Link>
               </h1>
             </li>
             <li>
@@ -47,7 +47,7 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
     </nav>
     {email ? (
       <div className="welcome-container">
-        <p className="welcome">Welcome, {email}! </p>
+        <p className="welcome">Welcome, {email} 👋 </p>
       </div>
     ) : (
       ''

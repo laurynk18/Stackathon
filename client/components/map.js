@@ -1,14 +1,12 @@
 import React, {Component} from 'react'
-import ReactMapGl, {
-  Marker,
-  Popup,
-  NavigationControl,
-  FlyToInterpolator
-} from 'react-map-gl'
+import ReactMapGl, {NavigationControl, FlyToInterpolator} from 'react-map-gl'
 import {fetchPlaces} from '../store/place'
 import Geocoder from 'react-map-gl-geocoder'
 import {connect} from 'react-redux'
 import {Pin} from './pin'
+import Sidebar from './sidebar'
+import {InfoPopup} from './popup'
+import AddPlacePopup from './addPlacePopup'
 
 const token =
   'pk.eyJ1IjoibGF1cnluYXByOTkiLCJhIjoiY2trZThhNzRhMDN2NjMwcGVjMHA4bG5kZSJ9.adHA-Pgnztq28O9TKW0SHQ'
@@ -29,7 +27,8 @@ class Map extends Component {
         longitude: -73.96625,
         zoom: 11
       },
-      selectedPlace: null
+      selectedPlace: null,
+      searchResult: null
     }
     this.handleGeocoderViewportChange = this.handleGeocoderViewportChange.bind(
       this
@@ -41,7 +40,6 @@ class Map extends Component {
   }
   componentDidMount() {
     this.props.loadPlaces()
-    //this.props.loadPlaces().then(this.setState({savedPlaces:this.props.places}))
   }
   mapRef = React.createRef()
   handleViewportChange = viewport => {
@@ -51,7 +49,6 @@ class Map extends Component {
   }
 
   //locates search result on map
-  // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
   handleGeocoderViewportChange = viewport => {
     const geocoderDefaultOverrides = {transitionDuration: 1000}
     return this.handleViewportChange({
@@ -59,10 +56,17 @@ class Map extends Component {
       ...geocoderDefaultOverrides
     })
   }
+  //search result
   handleOnResult(result) {
-    console.log(result)
+    console.log('result: ', result)
+    console.log('result center: ', result.result.center)
+    console.log('result name: ', result.result.text)
+    console.log('result address: ', result.result.place_name)
+    this.setState({
+      searchResult: result
+    })
   }
-
+  //marker click
   handleOnMarkerClick = place => {
     this.setState(prevState => ({
       viewport: {
@@ -76,10 +80,11 @@ class Map extends Component {
       selectedPlace: place
     }))
   }
-
+  //close pop-up
   handleClose = () => {
     this.setState({
-      selectedPlace: null
+      selectedPlace: null,
+      searchResult: null
     })
   }
 
@@ -90,6 +95,7 @@ class Map extends Component {
     }
     return (
       <div>
+        <Sidebar handleOnMarkerClick={this.handleOnMarkerClick} />
         <ReactMapGl
           ref={this.mapRef}
           {...this.state.viewport}
@@ -111,18 +117,18 @@ class Map extends Component {
               ))
             : ''}
           {this.state.selectedPlace && (
-            <Popup
-              latitude={this.state.selectedPlace.location[1]}
-              longitude={this.state.selectedPlace.location[0]}
-              closeButton={true}
-              closeOnClick={false}
-              onClose={() => this.handleClose()}
-              className="mapboxgl-popup"
-            >
-              <div>
-                <h1>{this.state.selectedPlace.name}</h1>
-              </div>
-            </Popup>
+            <InfoPopup
+              mapRef={this.mapRef}
+              selectedPlace={this.state.selectedPlace}
+              handleClose={this.handleClose}
+            />
+          )}
+          {this.state.searchResult && (
+            <AddPlacePopup
+              mapRef={this.mapRef}
+              searchResult={this.state.searchResult}
+              handleClose={this.handleClose}
+            />
           )}
           <Geocoder
             mapRef={this.mapRef}
@@ -130,7 +136,7 @@ class Map extends Component {
             onViewportChange={this.handleGeocoderViewportChange}
             mapboxApiAccessToken={token}
             countries="us"
-            marker={true} //or render new Marker --> onResult
+            marker={false} //or render new Marker --> onResult
             position="top-right"
           />
           <NavigationControl style={navControlStyle} />
@@ -142,7 +148,7 @@ class Map extends Component {
 }
 
 const mapStateToProps = state => ({
-  places: state.place
+  places: state.place.all
 })
 
 const mapDispatchToProps = dispatch => ({

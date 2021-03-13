@@ -37,7 +37,7 @@ async function seed() {
   const placesArr = [
     {
       name: 'Bouley',
-      address: '75 Wall St, New York, NY',
+      address: 'Bouley, 75 Wall St, New York, NY',
       phone: '123-456-7890',
       location: [-74.01394, 40.705137],
       rating: 4,
@@ -48,7 +48,7 @@ async function seed() {
     },
     {
       name: 'Marc Forgione',
-      address: '134 Reade St, New York, NY',
+      address: 'Marc Forgione, 134 Reade St, New York, NY',
       phone: '123-456-7890',
       location: [-74.009567, 40.716526],
       rating: 4,
@@ -59,7 +59,7 @@ async function seed() {
     },
     {
       name: 'Tamarind',
-      address: '99 Hudson St, New York, NY',
+      address: 'Tamarind, 99 Hudson St, New York, NY',
       phone: '123-456-7890',
       location: [-74.008929, 40.718977],
       rating: 3,
@@ -70,7 +70,7 @@ async function seed() {
     },
     {
       name: 'Hop Lee Restaurant',
-      address: '16 Mott St, New York, NY',
+      address: 'Hop Lee Restaurant, 16 Mott St, New York, NY',
       phone: '123-456-7890',
       location: [-73.998509, 40.71423],
       rating: 3,
@@ -81,7 +81,7 @@ async function seed() {
     },
     {
       name: 'Jungsik',
-      address: '2 Harrison St, New York, NY',
+      address: 'Jungsik, 2 Harrison St, New York, NY',
       phone: '123-456-7890',
       location: [-74.0089, 40.718679],
       rating: 5,
@@ -92,7 +92,7 @@ async function seed() {
     },
     {
       name: 'The Capital Grille',
-      address: '120 Broadway, New York, NY',
+      address: 'The Capital Grille, 120 Broadway, New York, NY',
       phone: '123-456-7890',
       location: [-74.010846, 40.708475],
       rating: 5,
@@ -103,7 +103,7 @@ async function seed() {
     },
     {
       name: 'Pylos',
-      address: '128 E 7th St, New York, NY',
+      address: 'Pylos, 128 E 7th St, New York, NY',
       phone: '123-456-7890',
       location: [-73.984152, 40.726096],
       rating: 3,
@@ -114,7 +114,7 @@ async function seed() {
     },
     {
       name: "Joe's Shanghai",
-      address: '9 Pell St, New York, NY',
+      address: `Joe's Shanghai, 9 Pell St, New York, NY`,
       phone: '123-456-7890',
       location: [-73.997761, 40.714601],
       rating: 5,
@@ -125,7 +125,7 @@ async function seed() {
     },
     {
       name: 'Cafe Katja',
-      address: '79 Orchard St, New York, NY',
+      address: 'Cafe Katja, 79 Orchard St, New York, NY',
       phone: '123-456-7890',
       location: [-73.990565, 40.717719],
       rating: 3,
@@ -136,7 +136,7 @@ async function seed() {
     },
     {
       name: 'Rosanjin',
-      address: '141 Duane St, New York',
+      address: 'Rosanjin, 141 Duane St, New York',
       phone: '123-456-7890',
       location: [-74.007724, 40.716403],
       rating: 4,
@@ -147,7 +147,7 @@ async function seed() {
     },
     {
       name: 'Kittichai',
-      address: '60 Thompson St, New York, NY',
+      address: 'Kittichai, 60 Thompson St, New York, NY',
       phone: '123-456-7890',
       location: [-74.003242, 40.724014],
       rating: 5,
@@ -158,7 +158,7 @@ async function seed() {
     },
     {
       name: 'Bianca',
-      address: '5 Bleecker St, New York, NY',
+      address: 'Bianca, 5 Bleecker St, New York, NY',
       phone: '123-456-7890',
       location: [-73.992662, 40.725495],
       rating: 3,
@@ -169,7 +169,7 @@ async function seed() {
     },
     {
       name: 'Rayuela',
-      address: '165 Allen St, New York, NY',
+      address: 'Rayuela, 165 Allen St, New York, NY',
       phone: '123-456-7890',
       location: [-73.989756, 40.721266],
       rating: 5,
@@ -180,7 +180,7 @@ async function seed() {
     },
     {
       name: 'Mas Farmhouse',
-      address: '39 Downing St, New York, NY',
+      address: 'Mas Farmhouse, 39 Downing St, New York, NY',
       phone: '123-456-7890',
       location: [-74.003875, 40.729269],
       rating: 5,
@@ -191,7 +191,7 @@ async function seed() {
     },
     {
       name: 'Lychee',
-      address: '86 Mulberry St, New York, NY',
+      address: 'Lychee, 86 Mulberry St, New York, NY',
       phone: '123-456-7890',
       location: [-73.998626, 40.716544],
       rating: 4,

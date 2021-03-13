@@ -7,7 +7,9 @@ class Sidebar extends Component {
   constructor() {
     super()
     this.state = {
-      isActive: false
+      showRestaurants: false,
+      showCafes: false,
+      showBars: false
     }
     this.handleToggle = this.handleToggle.bind(this)
   }
@@ -15,8 +17,16 @@ class Sidebar extends Component {
   componentDidMount() {
     this.props.loadPlaces()
   }
-  handleToggle = () => {
-    this.setState({isActive: !this.state.isActive})
+  handleToggle = category => {
+    if (category === 'restaurants') {
+      this.setState({showRestaurants: !this.state.showRestaurants})
+    }
+    if (category === 'cafes') {
+      this.setState({showCafes: !this.state.showCafes})
+    }
+    if (category === 'bars') {
+      this.setState({showBars: !this.state.showBars})
+    }
   }
   handleClickPlace = () => {
     this.setState({})
@@ -27,29 +37,85 @@ class Sidebar extends Component {
       <div className="sidenav">
         <button
           type="button"
-          className="dropdown-btn"
-          onClick={this.handleToggle}
+          className={
+            this.state.showRestaurants
+              ? 'dropdown-btn dropdown-selected'
+              : 'dropdown-btn'
+          }
+          onClick={() => this.handleToggle('restaurants')}
         >
           Restaurants
         </button>
-        {this.state.isActive
-          ? this.props.places
-              .filter(place => place.categoryId === 1)
-              .map(place => {
-                return (
-                  <div className="active" key={place.id}>
+        {this.state.showRestaurants &&
+          this.props.places
+            .filter(place => place.categoryId === 1)
+            .map(place => {
+              return (
+                <div className="active" key={place.id}>
+                  <button
+                    type="button"
+                    className="dropdown-place"
+                    onClick={() => this.props.handleOnMarkerClick(place)}
+                  >
                     <h4>{place.name}</h4>
-                    <h5>hi</h5>
-                  </div>
-                )
-              })
-          : null}
-        <button type="button" className="dropdown-btn">
+                  </button>
+                </div>
+              )
+            })}
+        <button
+          type="button"
+          className={
+            this.state.showCafes
+              ? 'dropdown-btn dropdown-selected'
+              : 'dropdown-btn'
+          }
+          onClick={() => this.handleToggle('cafes')}
+        >
           Cafes
         </button>
-        <button type="button" className="dropdown-btn">
+        {this.state.showCafes &&
+          this.props.places
+            .filter(place => place.categoryId === 2)
+            .map(place => {
+              return (
+                <div className="active" key={place.id}>
+                  <button
+                    type="button"
+                    className="dropdown-place"
+                    onClick={() => this.props.handleOnMarkerClick(place)}
+                  >
+                    <h4>{place.name}</h4>
+                  </button>
+                </div>
+              )
+            })}
+        <button
+          type="button"
+          className={
+            this.state.showBars
+              ? 'dropdown-btn dropdown-selected'
+              : 'dropdown-btn'
+          }
+          onClick={() => this.handleToggle('bars')}
+        >
           Bars
         </button>
+        {this.state.showBars &&
+          this.props.places
+            .filter(place => place.categoryId === 3)
+            .map(place => {
+              return (
+                <div className="active" key={place.id}>
+                  <button
+                    type="button"
+                    className="dropdown-place"
+                    onClick={() => this.props.handleOnMarkerClick(place)}
+                  >
+                    <h4>{place.name}</h4>
+                  </button>
+                </div>
+              )
+            })}
       </div>
     )
   }

@@ -2,7 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, Landing} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  Landing,
+  PlaceList,
+  PlaceEditForm
+} from './components'
 import {me} from './store'
 import {fetchPlaces} from './store/place'
 
@@ -27,6 +34,8 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route path="/saved-places" component={PlaceList} />
+            <Route path="/places/:placeId/edit" component={PlaceEditForm} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

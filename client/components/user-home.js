@@ -11,7 +11,7 @@ export const UserHome = props => {
   return (
     <div>
       <Map />
-      <Sidebar />
+      {/* <Sidebar /> */}
     </div>
   )
 }
