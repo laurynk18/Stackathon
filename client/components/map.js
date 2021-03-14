@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
-import ReactMapGl, {Marker, Popup, NavigationControl} from 'react-map-gl'
+import ReactMapGl, {NavigationControl, FlyToInterpolator} from 'react-map-gl'
 import {fetchPlaces} from '../store/place'
 import Geocoder from 'react-map-gl-geocoder'
 import {connect} from 'react-redux'
 import {Pin} from './pin'
+import Sidebar from './sidebar'
+import {InfoPopup} from './popup'
+import AddPlacePopup from './addPlacePopup'
 
 const token =
   'pk.eyJ1IjoibGF1cnluYXByOTkiLCJhIjoiY2trZThhNzRhMDN2NjMwcGVjMHA4bG5kZSJ9.adHA-Pgnztq28O9TKW0SHQ'
@@ -13,25 +16,27 @@ const navControlStyle = {
   bottom: 10
 }
 
-//get data from db, pass as props to sidebar, marker, popup
-
 class Map extends Component {
   constructor() {
     super()
     this.state = {
       viewport: {
         width: '100vw',
-        height: '80vh',
+        height: '90vh',
         latitude: 40.78343,
         longitude: -73.96625,
         zoom: 11
-      }
+      },
+      selectedPlace: null,
+      searchResult: null
     }
     this.handleGeocoderViewportChange = this.handleGeocoderViewportChange.bind(
       this
     )
     this.handleViewportChange = this.handleViewportChange.bind(this)
     this.handleOnResult = this.handleOnResult.bind(this)
+    this.handleOnMarkerClick = this.handleOnMarkerClick.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
   componentDidMount() {
     this.props.loadPlaces()
@@ -44,61 +49,113 @@ class Map extends Component {
   }
 
   //locates search result on map
-  // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
   handleGeocoderViewportChange = viewport => {
     const geocoderDefaultOverrides = {transitionDuration: 1000}
-
     return this.handleViewportChange({
       ...viewport,
       ...geocoderDefaultOverrides
     })
   }
+  //search result
   handleOnResult(result) {
-    console.log(result)
+    console.log('result: ', result)
+    console.log('result center: ', result.result.center)
+    console.log('result name: ', result.result.text)
+    console.log('result address: ', result.result.place_name)
+    this.setState({
+      searchResult: result
+    })
   }
+  //marker click
+  handleOnMarkerClick = place => {
+    this.setState(prevState => ({
+      viewport: {
+        ...prevState.viewport,
+        latitude: place.location[1],
+        longitude: place.location[0],
+        zoom: 14,
+        transitionDuration: 2000,
+        transitionInterpolator: new FlyToInterpolator()
+      },
+      selectedPlace: place
+    }))
+  }
+  //close pop-up
+  handleClose = () => {
+    this.setState({
+      selectedPlace: null,
+      searchResult: null
+    })
+  }
+
   render() {
+    let placesArr
+    if (this.props.places.length > 0) {
+      placesArr = this.props.places
+    }
+    //   if (this.state.searchResult){
+    //   console.log('DUPLICATE EXIST?-->', placesArr.filter(place => place.name === this.state.searchResult.result.text).length)}
+    // }
     return (
       <div>
-        {this.props.places && (
-          <ReactMapGl
-            ref={this.mapRef}
-            {...this.state.viewport}
-            onViewportChange={viewport => this.setState({viewport})}
-            mapboxApiAccessToken={token}
-            mapStyle="mapbox://styles/mapbox/streets-v10"
-          >
-            {/* <Marker latitude={40.785091} longitude={-73.968285} /> */}
-            {this.props.places.length ? (
-              this.props.places.map(place => (
+        <Sidebar handleOnMarkerClick={this.handleOnMarkerClick} />
+        <ReactMapGl
+          ref={this.mapRef}
+          {...this.state.viewport}
+          onViewportChange={viewport => this.setState({viewport})}
+          mapboxApiAccessToken={token}
+          mapStyle="mapbox://styles/mapbox/streets-v10"
+        >
+          {/* <Marker latitude={40.785091} longitude={-73.968285} /> */}
+          {Array.isArray(placesArr)
+            ? placesArr.map(place => (
                 <Pin
+                  mapRef={this.mapRef}
                   key={place.id}
                   place={place}
-                  latitude={place.location[0]}
-                  longitude={place.location[1]}
+                  viewport={this.state.viewport}
+                  handleOnMarkerClick={this.handleOnMarkerClick}
                 />
               ))
-            ) : (
-              <div>Loading...</div>
-            )}
-            <Geocoder
+            : ''}
+          {this.state.selectedPlace && (
+            <InfoPopup
               mapRef={this.mapRef}
-              onResult={this.handleOnResult}
-              onViewportChange={this.handleGeocoderViewportChange}
-              mapboxApiAccessToken={token}
-              countries="us"
-              marker={true} //or render new Marker --> onResult
-              position="top-right"
+              selectedPlace={this.state.selectedPlace}
+              handleClose={this.handleClose}
             />
-            <NavigationControl style={navControlStyle} />
-          </ReactMapGl>
-        )}
+          )}
+          {this.state.searchResult &&
+            (!placesArr ||
+              !placesArr.filter(
+                place => place.name === this.state.searchResult.result.text
+              ).length) && (
+              <AddPlacePopup
+                mapRef={this.mapRef}
+                searchResult={this.state.searchResult}
+                handleClose={this.handleClose}
+              />
+            )}
+          <Geocoder
+            mapRef={this.mapRef}
+            onResult={this.handleOnResult}
+            placeholder="Search to pin!"
+            onViewportChange={this.handleGeocoderViewportChange}
+            mapboxApiAccessToken={token}
+            countries="us"
+            marker={false}
+            position="top-right"
+          />
+          <NavigationControl style={navControlStyle} />
+        </ReactMapGl>
+        ) : <div>Loading...</div>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  places: state.place
+  places: state.place.all
 })
 
 const mapDispatchToProps = dispatch => ({

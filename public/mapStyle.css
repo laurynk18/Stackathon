@@ -503,6 +503,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 }
 .mapboxgl-popup-content {
   position: relative;
+  width: 250px;
   background: #fff;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -541,11 +542,12 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   will-change: transform;
   opacity: 1;
   transition: opacity 0.2s;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  border: 1px solid gray;
-  background-color: coral;
+  width: 15px;
+  height: 15px;
+  font-size: 20px;
+  /* border-radius: 50%;
+  border: 1px solid black;
+  background-color: red; */
 }
 .mapboxgl-marker-occluded {
   opacity: 0.2;
