@@ -35,6 +35,7 @@ class Sidebar extends Component {
   render() {
     return (
       <div className="sidenav">
+        <h1 className="sidenav-header">Click to navigate!</h1>
         <button
           type="button"
           className={
@@ -44,7 +45,7 @@ class Sidebar extends Component {
           }
           onClick={() => this.handleToggle('restaurants')}
         >
-          Restaurants
+          Restaurants 🍕
         </button>
         {this.state.showRestaurants &&
           this.props.places
@@ -71,7 +72,7 @@ class Sidebar extends Component {
           }
           onClick={() => this.handleToggle('cafes')}
         >
-          Cafes
+          Cafes ☕
         </button>
         {this.state.showCafes &&
           this.props.places
@@ -98,7 +99,7 @@ class Sidebar extends Component {
           }
           onClick={() => this.handleToggle('bars')}
         >
-          Bars
+          Bars 🍷
         </button>
         {this.state.showBars &&
           this.props.places
@@ -124,7 +125,7 @@ class Sidebar extends Component {
 //onClick header buttons==> ul toggle on/off
 
 const mapStateToProps = state => ({
-  places: state.place
+  places: state.place.all
 })
 
 const mapDispatchToProps = dispatch => ({

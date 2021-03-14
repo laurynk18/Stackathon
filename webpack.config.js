@@ -32,11 +32,18 @@ module.exports = {
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader'
+            // options: {
+            //   name: '[path][name].[ext]',
+            // },
+          }
+        ]
       }
     ]
   }
-  // plugins: [
-  //   new HtmlWebpackPlugin({title: 'react-map-gl Example'}),
-  //   new webpack.EnvironmentPlugin(['MapboxAccessToken'])
-  // ]
 }

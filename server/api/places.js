@@ -2,6 +2,16 @@ const router = require('express').Router()
 const {Place, User} = require('../db/models')
 module.exports = router
 
+// gatekeeping
+// const currentUserOnly = (req, res, next) => {
+//   if (req.user && req.user.id === +req.params.userId) next()
+//   else {
+//     const err = new Error('Please sign up or log in!')
+//     err.status = 401
+//     next(err)
+//   }
+// }
+
 // GET /api/places
 router.get('/', async (req, res, next) => {
   try {
@@ -29,15 +39,13 @@ router.get('/:placeId', async (req, res, next) => {
 // POST /api/places
 router.post('/', async (req, res, next) => {
   try {
-    res
-      .status(201)
-      .send(
-        await Place.create({
-          ...req.body,
-          userId: req.user.id,
-          categoryId: req.body.categoryId
-        })
-      )
+    res.status(201).send(
+      await Place.create({
+        ...req.body,
+        userId: req.user.id,
+        categoryId: req.body.categoryId
+      })
+    )
   } catch (err) {
     next(err)
   }
@@ -56,5 +64,3 @@ router.put('/:placeId', async (req, res, next) => {
     next(err)
   }
 })
-
-//add gatekeeping middleware!!!

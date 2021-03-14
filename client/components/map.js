@@ -22,7 +22,7 @@ class Map extends Component {
     this.state = {
       viewport: {
         width: '100vw',
-        height: '80vh',
+        height: '90vh',
         latitude: 40.78343,
         longitude: -73.96625,
         zoom: 11
@@ -93,6 +93,9 @@ class Map extends Component {
     if (this.props.places.length > 0) {
       placesArr = this.props.places
     }
+    //   if (this.state.searchResult){
+    //   console.log('DUPLICATE EXIST?-->', placesArr.filter(place => place.name === this.state.searchResult.result.text).length)}
+    // }
     return (
       <div>
         <Sidebar handleOnMarkerClick={this.handleOnMarkerClick} />
@@ -113,7 +116,6 @@ class Map extends Component {
                   viewport={this.state.viewport}
                   handleOnMarkerClick={this.handleOnMarkerClick}
                 />
-                // <Marker key={place.id} latitude={place.location[1]} longitude={place.location[0]}/>
               ))
             : ''}
           {this.state.selectedPlace && (
@@ -123,20 +125,25 @@ class Map extends Component {
               handleClose={this.handleClose}
             />
           )}
-          {this.state.searchResult && (
-            <AddPlacePopup
-              mapRef={this.mapRef}
-              searchResult={this.state.searchResult}
-              handleClose={this.handleClose}
-            />
-          )}
+          {this.state.searchResult &&
+            (!placesArr ||
+              !placesArr.filter(
+                place => place.name === this.state.searchResult.result.text
+              ).length) && (
+              <AddPlacePopup
+                mapRef={this.mapRef}
+                searchResult={this.state.searchResult}
+                handleClose={this.handleClose}
+              />
+            )}
           <Geocoder
             mapRef={this.mapRef}
             onResult={this.handleOnResult}
+            placeholder="Search to pin!"
             onViewportChange={this.handleGeocoderViewportChange}
             mapboxApiAccessToken={token}
             countries="us"
-            marker={false} //or render new Marker --> onResult
+            marker={false}
             position="top-right"
           />
           <NavigationControl style={navControlStyle} />

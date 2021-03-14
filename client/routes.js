@@ -36,6 +36,7 @@ class Routes extends Component {
             <Route path="/home" component={UserHome} />
             <Route path="/saved-places" component={PlaceList} />
             <Route path="/places/:placeId/edit" component={PlaceEditForm} />
+            {/* <Route path="/places/:placeId/edit" render = {() => <PlaceEditForm userId ={userId} {...this.props}/>} /> */}
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
@@ -53,6 +54,7 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id
+    //userId: state.user.id
   }
 }
 

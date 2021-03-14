@@ -110,17 +110,16 @@ form div {
   font-family: Righteous-Regular;
 }
 
-/* Fixed sidenav, full height */
 .sidenav {
-  height: 60%;
+  height: 50%;
   width: 240px;
   position: fixed;
   z-index: 1;
-  bottom: 5%;
+  bottom: 0;
   left: 0;
   background-color: black;
   overflow-x: hidden;
-  padding-top: 20px;
+  padding: 20px 10px 20px;
   color: #f1f1f1;
 }
 
@@ -128,6 +127,12 @@ form div {
 .sidenav h1,
 .dropdown-selected {
   color: #f1f1f1;
+}
+
+.sidenav-header {
+  font-family: 'Righteous-Regular';
+  padding: 6px 8px 6px 16px;
+  margin-top: 0;
 }
 
 .dropdown-btn {
@@ -205,6 +210,10 @@ form div {
   margin: 4px 2px;
 }
 
+.place-tag:empty {
+  display: none;
+}
+
 .place-list-tag {
   background-color: white;
   font-family: 'Righteous-Regular';
@@ -234,4 +243,14 @@ form div {
 .place-form {
   font-family: 'Righteous-Regular';
   color: white;
+}
+
+.marker-btn {
+  display: block;
+  border: none;
+  background: none;
+  font-size: 20px;
+  /* width: 100%; */
+  cursor: pointer;
+  outline: none;
 }

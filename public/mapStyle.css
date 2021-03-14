@@ -542,11 +542,12 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   will-change: transform;
   opacity: 1;
   transition: opacity 0.2s;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  font-size: 20px;
+  /* border-radius: 50%;
   border: 1px solid black;
-  background-color: red;
+  background-color: red; */
 }
 .mapboxgl-marker-occluded {
   opacity: 0.2;

@@ -39,14 +39,6 @@ class AddPlacePopup extends Component {
     if (
       prevProps.searchResult.result.text !== this.props.searchResult.result.text
     ) {
-      console.log(
-        'COMP DID UPDATE PREV PROPS!!-->',
-        prevProps.searchResult.result.text
-      )
-      console.log(
-        'COMP DID UPDATE NOW PROPS!!-->',
-        this.props.searchResult.result.text
-      )
       this.setState({
         placeInfo: {
           name: this.props.searchResult.result.text,
@@ -102,6 +94,7 @@ class AddPlacePopup extends Component {
             name="rating"
             type="number"
             onChange={handleChange}
+            defaultValue="1"
             value={this.state.placeInfo.rating}
             min="1"
             max="5"
@@ -140,6 +133,7 @@ class AddPlacePopup extends Component {
           </select>
 
           <button type="submit">Submit</button>
+          {this.props.added}
         </form>
       </Popup>
     )
@@ -151,5 +145,4 @@ const mapDispatch = dispatch => {
     createPlace: placeInfo => dispatch(addPlace(placeInfo))
   }
 }
-
 export default connect(null, mapDispatch)(AddPlacePopup)

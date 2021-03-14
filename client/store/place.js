@@ -48,11 +48,9 @@ export const addPlace = placeInfo => {
       let categoryId
       if (placeInfo.category === 'Restaurant') {
         categoryId = 1
-      }
-      if (placeInfo.category === 'Cafe') {
+      } else if (placeInfo.category === 'Cafe') {
         categoryId = 2
-      }
-      if (placeInfo.category === 'Bar') {
+      } else if (placeInfo.category === 'Bar') {
         categoryId = 3
       }
       const {data} = await axios.post('/api/places', {
@@ -72,11 +70,9 @@ export const updatePlace = place => {
       let categoryId
       if (place.category === 'Restaurant') {
         categoryId = 1
-      }
-      if (place.category === 'Cafe') {
+      } else if (place.category === 'Cafe') {
         categoryId = 2
-      }
-      if (place.category === 'Bar') {
+      } else if (place.category === 'Bar') {
         categoryId = 3
       }
       const {data} = await axios.put(`/api/places/${place.id}`, {

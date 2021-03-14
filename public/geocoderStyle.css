@@ -111,8 +111,9 @@
 .mapboxgl-ctrl-geocoder--suggestion-title,
 .mapboxgl-ctrl-geocoder--suggestion-address {
   text-overflow: ellipsis;
+  /*white-space: nowrap; */
   overflow: hidden;
-  white-space: nowrap;
+  white-space: initial;
 }
 
 /* Icons */

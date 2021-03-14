@@ -20,6 +20,7 @@ class PlaceEditForm extends Component {
     this.state = defaultState
   }
   async componentDidMount() {
+    console.log('edit form paarams-->', this.props)
     await this.props.loadPlace(this.props.match.params.placeId)
     const {
       name,

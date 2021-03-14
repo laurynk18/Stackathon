@@ -16,6 +16,8 @@ export const Pin = props => {
       latitude={latitude}
       longitude={longitude}
       onClick={() => handleOnMarkerClick(place)}
-    />
+    >
+      {place.categoryId === 1 ? '🍕' : place.categoryId === 2 ? '☕' : '🍷'}
+    </Marker>
   )
 }

@@ -22,7 +22,7 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
           <div className="nav-right">
             <li>
               <h1>
-                <Link to="/saved-places">Saved</Link>
+                <Link to="/saved-places/">Saved</Link>
               </h1>
             </li>
             <li>
@@ -63,6 +63,7 @@ const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
     email: state.user.email
+    //userId: state.user.id
   }
 }
 

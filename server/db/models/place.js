@@ -4,7 +4,6 @@ const db = require('../db')
 const Place = db.define('place', {
   name: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: false
   },
   address: Sequelize.STRING,
@@ -21,9 +20,18 @@ const Place = db.define('place', {
   tag: Sequelize.ARRAY(Sequelize.STRING)
 })
 
-Place.beforeCreate(place => {
+Place.beforeCreate(async place => {
   if (!Array.isArray(place.tag)) {
     place.tag = [place.tag]
+  }
+  const duplicate = await Place.findOne({
+    where: {
+      name: place.name,
+      userId: place.userId
+    }
+  })
+  if (duplicate) {
+    throw new Error('Place already saved!')
   }
 })
 

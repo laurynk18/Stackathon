@@ -18,7 +18,7 @@ export const InfoPopup = props => {
         <p>Address: {selectedPlace.address}</p>
         <p>Rating: {'⭐'.repeat(selectedPlace.rating)}</p>
         {selectedPlace.note && <p>Notes: {selectedPlace.note}</p>}
-        {selectedPlace.tag &&
+        {selectedPlace.tag.length &&
           selectedPlace.tag.map(tag => (
             <p key={tag} className="place-tag">
               {tag}
