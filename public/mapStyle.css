@@ -510,6 +510,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   padding: 10px 10px 15px;
   pointer-events: auto;
   word-wrap: break-word;
+  color: black;
 }
 .mapboxgl-popup-anchor-top-left .mapboxgl-popup-content {
   border-top-left-radius: 0;

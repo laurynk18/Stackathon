@@ -35,7 +35,7 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
           </div>
         </ul>
       ) : (
-        <ul className="landing-navItems">
+        <ul className="navItems">
           <div className="nav-left">
             <li>
               <h1 className="logo">
@@ -63,7 +63,6 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
     ) : (
       ''
     )}
-    <hr />
   </div>
 )
 

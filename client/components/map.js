@@ -21,8 +21,8 @@ class Map extends Component {
     super()
     this.state = {
       viewport: {
-        width: '100vw',
-        height: '100vh',
+        width: '99vw',
+        height: '84vh',
         latitude: 40.78343,
         longitude: -73.96625,
         zoom: 11
