@@ -58,9 +58,10 @@ nav {
 .landing-navItems {
   display: flex;
   flex-direction: row;
-  padding: 10px 30px 10px 0px;
+  padding: 70px 30px 50px 0px;
   font-family: 'Righteous-Regular';
-  justify-content: flex-end;
+  font-size: 20px;
+  justify-content: space-between;
   align-items: center;
 }
 

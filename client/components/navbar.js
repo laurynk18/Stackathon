@@ -36,12 +36,23 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
         </ul>
       ) : (
         <ul className="landing-navItems">
-          <li style={{float: 'right'}}>
-            <Link to="/login">Login</Link>
-          </li>
-          <li style={{float: 'right'}}>
-            <Link to="/signup">Sign Up</Link>
-          </li>
+          <div className="nav-left">
+            <li>
+              <h1 className="logo">
+                <Link to="/">
+                  P<span>i</span>nEAT
+                </Link>
+              </h1>
+            </li>
+          </div>
+          <div className="nav-right">
+            <li style={{float: 'right'}}>
+              <Link to="/login">Login</Link>
+            </li>
+            <li style={{float: 'right'}}>
+              <Link to="/signup">Sign Up</Link>
+            </li>
+          </div>
         </ul>
       )}
     </nav>
