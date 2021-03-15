@@ -34,7 +34,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
-            <Route path="/saved-places" component={PlaceList} />
+            <Route path="/pinned-places" component={PlaceList} />
             <Route path="/places/:placeId/edit" component={PlaceEditForm} />
             {/* <Route path="/places/:placeId/edit" render = {() => <PlaceEditForm userId ={userId} {...this.props}/>} /> */}
           </Switch>

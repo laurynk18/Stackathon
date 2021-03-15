@@ -7,7 +7,7 @@ const defaultState = {
   placeInfo: {
     name: '',
     address: '',
-    rating: 1,
+    rating: '',
     note: '',
     category: '',
     tag: '',
@@ -44,7 +44,7 @@ class AddPlacePopup extends Component {
           name: this.props.searchResult.result.text,
           address: this.props.searchResult.result.place_name,
           location: this.props.searchResult.result.center,
-          rating: 1,
+          rating: '',
           category: '',
           tag: '',
           note: ''
@@ -94,7 +94,6 @@ class AddPlacePopup extends Component {
             name="rating"
             type="number"
             onChange={handleChange}
-            defaultValue="1"
             value={this.state.placeInfo.rating}
             min="1"
             max="5"

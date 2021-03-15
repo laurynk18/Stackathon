@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn, email}) => (
-  <div>
+  <div className="nav-main">
     <nav>
       {isLoggedIn ? (
         <ul className="navItems">
@@ -13,7 +13,7 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
             <li>
               <h1 className="logo">
                 <Link to="/home">
-                  P<span>i</span>nEat
+                  P<span>i</span>nEAT
                 </Link>
               </h1>
             </li>
@@ -22,7 +22,7 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
           <div className="nav-right">
             <li>
               <h1>
-                <Link to="/saved-places/">Saved</Link>
+                <Link to="/pinned-places/">My Pins</Link>
               </h1>
             </li>
             <li>
@@ -35,7 +35,7 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
           </div>
         </ul>
       ) : (
-        <ul className="navItems">
+        <ul className="landing-navItems">
           <li style={{float: 'right'}}>
             <Link to="/login">Login</Link>
           </li>

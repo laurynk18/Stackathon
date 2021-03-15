@@ -20,7 +20,6 @@ class PlaceEditForm extends Component {
     this.state = defaultState
   }
   async componentDidMount() {
-    console.log('edit form paarams-->', this.props)
     await this.props.loadPlace(this.props.match.params.placeId)
     const {
       name,
@@ -29,7 +28,8 @@ class PlaceEditForm extends Component {
       rating,
       note,
       tag,
-      categoryId
+      categoryId,
+      category
     } = this.props.place
     this.setState({
       name: name,
@@ -38,6 +38,7 @@ class PlaceEditForm extends Component {
       rating: rating,
       note: note || '',
       tag: tag || '',
+      // category: category.category
       category:
         categoryId === 1 ? 'Restaurant' : categoryId === 2 ? 'Cafe' : 'Bar'
     })

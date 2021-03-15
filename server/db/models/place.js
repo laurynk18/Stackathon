@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const {Category} = require('./')
 
 const Place = db.define('place', {
   name: {
@@ -34,5 +35,10 @@ Place.beforeCreate(async place => {
     throw new Error('Place already saved!')
   }
 })
+
+// Place.beforeSave(async place => {
+//   const foundCategory = await Category.findByPk(place.categoryId)
+//   await place.setCategory(foundCategory);
+// })
 
 module.exports = Place

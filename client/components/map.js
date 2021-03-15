@@ -22,13 +22,16 @@ class Map extends Component {
     this.state = {
       viewport: {
         width: '100vw',
-        height: '90vh',
+        height: '100vh',
         latitude: 40.78343,
         longitude: -73.96625,
         zoom: 11
       },
       selectedPlace: null,
-      searchResult: null
+      searchResult: null,
+      toggleRestaurant: true,
+      toggleCafe: true,
+      toggleBar: true
     }
     this.handleGeocoderViewportChange = this.handleGeocoderViewportChange.bind(
       this
@@ -37,11 +40,15 @@ class Map extends Component {
     this.handleOnResult = this.handleOnResult.bind(this)
     this.handleOnMarkerClick = this.handleOnMarkerClick.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.toggleState = this.toggleState.bind(this)
   }
+
+  mapRef = React.createRef()
+
   componentDidMount() {
     this.props.loadPlaces()
   }
-  mapRef = React.createRef()
+
   handleViewportChange = viewport => {
     this.setState(prevState => ({
       viewport: {...prevState.viewport, ...viewport}
@@ -57,7 +64,7 @@ class Map extends Component {
     })
   }
   //search result
-  handleOnResult(result) {
+  handleOnResult = result => {
     console.log('result: ', result)
     console.log('result center: ', result.result.center)
     console.log('result name: ', result.result.text)
@@ -88,17 +95,30 @@ class Map extends Component {
     })
   }
 
+  toggleState = evt => {
+    console.log(this.state['toggle' + evt.target.name])
+    this.setState({
+      ['toggle' + evt.target.name]: evt.target.checked
+    })
+  }
+
   render() {
     let placesArr
-    if (this.props.places.length > 0) {
-      placesArr = this.props.places
+    if (Array.isArray(this.props.places) && this.props.places.length > 0) {
+      // placesArr = this.props.places
+      placesArr = this.props.places.filter(
+        place => this.state['toggle' + place.category.category]
+      )
     }
     //   if (this.state.searchResult){
     //   console.log('DUPLICATE EXIST?-->', placesArr.filter(place => place.name === this.state.searchResult.result.text).length)}
     // }
     return (
       <div>
-        <Sidebar handleOnMarkerClick={this.handleOnMarkerClick} />
+        <Sidebar
+          handleOnMarkerClick={this.handleOnMarkerClick}
+          toggleState={this.toggleState}
+        />
         <ReactMapGl
           ref={this.mapRef}
           {...this.state.viewport}
@@ -144,7 +164,7 @@ class Map extends Component {
             mapboxApiAccessToken={token}
             countries="us"
             marker={false}
-            position="top-right"
+            // position="top-right"
           />
           <NavigationControl style={navControlStyle} />
         </ReactMapGl>

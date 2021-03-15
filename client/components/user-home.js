@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Map from './map'
-import Sidebar from './sidebar'
 
 /**
  * COMPONENT
@@ -11,7 +10,6 @@ export const UserHome = props => {
   return (
     <div>
       <Map />
-      {/* <Sidebar /> */}
     </div>
   )
 }

@@ -4,7 +4,8 @@ const db = require('../db')
 const Category = db.define('category', {
   category: {
     type: Sequelize.ENUM('Restaurant', 'Cafe', 'Bar'),
-    allowNull: false
+    allowNull: false,
+    unique: true
   }
 })
 
