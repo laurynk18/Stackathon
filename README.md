@@ -16,7 +16,7 @@ Back End: Node.js, Express, PostgreSQL, Sequelize
 
 ## Set Up
 
-If you'd like to explore our code, feel free to clone this repo. To start, please run the following commands:
+If you'd like to explore the code, feel free to clone this repo. To start, please run the following commands:
 
 ```
 git clone https://github.com/laurynk18/Stackathon.git
