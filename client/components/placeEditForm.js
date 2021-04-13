@@ -63,8 +63,8 @@ class PlaceEditForm extends Component {
       return <div>Loading...</div>
     }
     return (
-      <div>
-        <form className="place-form" onSubmit={this.handleSubmit}>
+      <div className="form-container">
+        <form className="form-content" onSubmit={this.handleSubmit}>
           <label htmlFor="name">Name:</label>
           <input
             name="name"
@@ -133,7 +133,9 @@ class PlaceEditForm extends Component {
           </select>
           <br />
 
-          <button type="submit">Submit</button>
+          <button className="submit-btn" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     )
