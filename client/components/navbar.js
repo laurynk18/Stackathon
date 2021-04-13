@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn, email}) => (
-  <div>
+  <div className="nav-main">
     <nav>
       {isLoggedIn ? (
         <ul className="navItems">
@@ -22,7 +22,7 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
           <div className="nav-right">
             <li>
               <h1>
-                <Link to="/saved-places/">Saved</Link>
+                <Link to="/pinned-places/">My Pins</Link>
               </h1>
             </li>
             <li>
@@ -36,12 +36,23 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
         </ul>
       ) : (
         <ul className="navItems">
-          <li style={{float: 'right'}}>
-            <Link to="/login">Login</Link>
-          </li>
-          <li style={{float: 'right'}}>
-            <Link to="/signup">Sign Up</Link>
-          </li>
+          <div className="nav-left">
+            <li>
+              <h1 className="logo">
+                <Link to="/">
+                  P<span>i</span>nEat
+                </Link>
+              </h1>
+            </li>
+          </div>
+          <div className="nav-right">
+            <li style={{float: 'right'}}>
+              <Link to="/login">Login</Link>
+            </li>
+            <li style={{float: 'right'}}>
+              <Link to="/signup">Sign Up</Link>
+            </li>
+          </div>
         </ul>
       )}
     </nav>
@@ -52,7 +63,6 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
     ) : (
       ''
     )}
-    <hr />
   </div>
 )
 
@@ -63,7 +73,6 @@ const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
     email: state.user.email
-    //userId: state.user.id
   }
 }
 

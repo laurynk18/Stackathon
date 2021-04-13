@@ -20,7 +20,6 @@ class PlaceEditForm extends Component {
     this.state = defaultState
   }
   async componentDidMount() {
-    console.log('edit form paarams-->', this.props)
     await this.props.loadPlace(this.props.match.params.placeId)
     const {
       name,
@@ -43,7 +42,6 @@ class PlaceEditForm extends Component {
     })
   }
   handleChange(evt) {
-    console.log('TAG', this.state.tag)
     this.setState({
       [evt.target.name]: evt.target.value
     })

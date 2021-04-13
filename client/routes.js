@@ -11,7 +11,6 @@ import {
   PlaceEditForm
 } from './components'
 import {me} from './store'
-import {fetchPlaces} from './store/place'
 
 /**
  * COMPONENT
@@ -27,14 +26,16 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route exact path="/" component={Landing} />
+        {!isLoggedIn && <Route exact path="/" component={Landing} />}
+        {/* <Route exact path="/" component={Landing} /> */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route exact path="/" component={UserHome} />
             <Route path="/home" component={UserHome} />
-            <Route path="/saved-places" component={PlaceList} />
+            <Route path="/pinned-places" component={PlaceList} />
             <Route path="/places/:placeId/edit" component={PlaceEditForm} />
             {/* <Route path="/places/:placeId/edit" render = {() => <PlaceEditForm userId ={userId} {...this.props}/>} /> */}
           </Switch>
@@ -54,7 +55,6 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id
-    //userId: state.user.id
   }
 }
 
@@ -62,7 +62,6 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-      //dispatch(fetchPlaces())
     }
   }
 }

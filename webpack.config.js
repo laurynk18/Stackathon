@@ -1,13 +1,12 @@
-const webpack = require('webpack')
 const isDev = process.env.NODE_ENV === 'development'
-//const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const Dotenv = require('dotenv-webpack')
 module.exports = {
   mode: isDev ? 'development' : 'production',
   entry: [
     '@babel/polyfill', // enables async-await
     './client/index.js'
   ],
+  plugins: [new Dotenv()],
   output: {
     path: __dirname,
     filename: './public/bundle.js'
@@ -38,9 +37,6 @@ module.exports = {
         use: [
           {
             loader: 'file-loader'
-            // options: {
-            //   name: '[path][name].[ext]',
-            // },
           }
         ]
       }

@@ -7,7 +7,7 @@ const defaultState = {
   placeInfo: {
     name: '',
     address: '',
-    rating: 1,
+    rating: '',
     note: '',
     category: '',
     tag: '',
@@ -22,7 +22,6 @@ class AddPlacePopup extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  //track submitted in componentDidUpdate --> render "Added!"
 
   componentDidMount() {
     this.setState({
@@ -31,7 +30,6 @@ class AddPlacePopup extends Component {
         address: this.props.searchResult.result.place_name,
         location: this.props.searchResult.result.center
       }
-      //submitted: false,
     })
   }
 
@@ -44,7 +42,7 @@ class AddPlacePopup extends Component {
           name: this.props.searchResult.result.text,
           address: this.props.searchResult.result.place_name,
           location: this.props.searchResult.result.center,
-          rating: 1,
+          rating: '',
           category: '',
           tag: '',
           note: ''
@@ -68,7 +66,6 @@ class AddPlacePopup extends Component {
       rating: +this.state.placeInfo.rating,
       tag: this.state.placeInfo.tag && this.state.placeInfo.tag.split(',')
     })
-    //this.setState({submitted: true})
   }
 
   render() {
@@ -94,7 +91,6 @@ class AddPlacePopup extends Component {
             name="rating"
             type="number"
             onChange={handleChange}
-            defaultValue="1"
             value={this.state.placeInfo.rating}
             min="1"
             max="5"

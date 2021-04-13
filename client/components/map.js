@@ -7,9 +7,7 @@ import {Pin} from './pin'
 import Sidebar from './sidebar'
 import {InfoPopup} from './popup'
 import AddPlacePopup from './addPlacePopup'
-
-const token =
-  'pk.eyJ1IjoibGF1cnluYXByOTkiLCJhIjoiY2trZThhNzRhMDN2NjMwcGVjMHA4bG5kZSJ9.adHA-Pgnztq28O9TKW0SHQ'
+const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 const navControlStyle = {
   right: 30,
@@ -21,14 +19,17 @@ class Map extends Component {
     super()
     this.state = {
       viewport: {
-        width: '100vw',
-        height: '90vh',
+        width: '99vw',
+        height: '84vh',
         latitude: 40.78343,
         longitude: -73.96625,
         zoom: 11
       },
       selectedPlace: null,
-      searchResult: null
+      searchResult: null,
+      toggleRestaurant: true,
+      toggleCafe: true,
+      toggleBar: true
     }
     this.handleGeocoderViewportChange = this.handleGeocoderViewportChange.bind(
       this
@@ -37,11 +38,15 @@ class Map extends Component {
     this.handleOnResult = this.handleOnResult.bind(this)
     this.handleOnMarkerClick = this.handleOnMarkerClick.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.toggleState = this.toggleState.bind(this)
   }
+
+  mapRef = React.createRef()
+
   componentDidMount() {
     this.props.loadPlaces()
   }
-  mapRef = React.createRef()
+
   handleViewportChange = viewport => {
     this.setState(prevState => ({
       viewport: {...prevState.viewport, ...viewport}
@@ -57,11 +62,7 @@ class Map extends Component {
     })
   }
   //search result
-  handleOnResult(result) {
-    console.log('result: ', result)
-    console.log('result center: ', result.result.center)
-    console.log('result name: ', result.result.text)
-    console.log('result address: ', result.result.place_name)
+  handleOnResult = result => {
     this.setState({
       searchResult: result
     })
@@ -88,25 +89,32 @@ class Map extends Component {
     })
   }
 
+  toggleState = evt => {
+    this.setState({
+      ['toggle' + evt.target.name]: evt.target.checked
+    })
+  }
+
   render() {
     let placesArr
-    if (this.props.places.length > 0) {
-      placesArr = this.props.places
+    if (Array.isArray(this.props.places) && this.props.places.length > 0) {
+      placesArr = this.props.places.filter(
+        place => this.state['toggle' + place.category.category]
+      )
     }
-    //   if (this.state.searchResult){
-    //   console.log('DUPLICATE EXIST?-->', placesArr.filter(place => place.name === this.state.searchResult.result.text).length)}
-    // }
     return (
       <div>
-        <Sidebar handleOnMarkerClick={this.handleOnMarkerClick} />
+        <Sidebar
+          handleOnMarkerClick={this.handleOnMarkerClick}
+          toggleState={this.toggleState}
+        />
         <ReactMapGl
           ref={this.mapRef}
           {...this.state.viewport}
           onViewportChange={viewport => this.setState({viewport})}
-          mapboxApiAccessToken={token}
+          mapboxApiAccessToken={MAPBOX_TOKEN}
           mapStyle="mapbox://styles/mapbox/streets-v10"
         >
-          {/* <Marker latitude={40.785091} longitude={-73.968285} /> */}
           {Array.isArray(placesArr)
             ? placesArr.map(place => (
                 <Pin
@@ -141,10 +149,9 @@ class Map extends Component {
             onResult={this.handleOnResult}
             placeholder="Search to pin!"
             onViewportChange={this.handleGeocoderViewportChange}
-            mapboxApiAccessToken={token}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
             countries="us"
             marker={false}
-            position="top-right"
           />
           <NavigationControl style={navControlStyle} />
         </ReactMapGl>

@@ -11,13 +11,13 @@ class Sidebar extends Component {
       showCafes: false,
       showBars: false
     }
-    this.handleToggle = this.handleToggle.bind(this)
+    this.handleListToggle = this.handleListToggle.bind(this)
   }
 
   componentDidMount() {
     this.props.loadPlaces()
   }
-  handleToggle = category => {
+  handleListToggle = category => {
     if (category === 'restaurants') {
       this.setState({showRestaurants: !this.state.showRestaurants})
     }
@@ -36,17 +36,26 @@ class Sidebar extends Component {
     return (
       <div className="sidenav">
         <h1 className="sidenav-header">Click to navigate!</h1>
-        <button
-          type="button"
-          className={
-            this.state.showRestaurants
-              ? 'dropdown-btn dropdown-selected'
-              : 'dropdown-btn'
-          }
-          onClick={() => this.handleToggle('restaurants')}
-        >
-          Restaurants 🍕
-        </button>
+        <div className="sidenav-subheader">
+          <button
+            type="button"
+            className={
+              this.state.showRestaurants
+                ? 'dropdown-btn dropdown-selected'
+                : 'dropdown-btn'
+            }
+            onClick={() => this.handleListToggle('restaurants')}
+          >
+            Restaurants 🍕
+          </button>
+          <input
+            type="checkbox"
+            id="restaurant"
+            name="Restaurant"
+            defaultChecked={true}
+            onChange={this.props.toggleState}
+          />
+        </div>
         {this.state.showRestaurants &&
           this.props.places
             .filter(place => place.categoryId === 1)
@@ -63,17 +72,26 @@ class Sidebar extends Component {
                 </div>
               )
             })}
-        <button
-          type="button"
-          className={
-            this.state.showCafes
-              ? 'dropdown-btn dropdown-selected'
-              : 'dropdown-btn'
-          }
-          onClick={() => this.handleToggle('cafes')}
-        >
-          Cafes ☕
-        </button>
+        <div className="sidenav-subheader">
+          <button
+            type="button"
+            className={
+              this.state.showCafes
+                ? 'dropdown-btn dropdown-selected'
+                : 'dropdown-btn'
+            }
+            onClick={() => this.handleListToggle('cafes')}
+          >
+            Cafes ☕
+          </button>
+          <input
+            type="checkbox"
+            id="cafe"
+            name="Cafe"
+            defaultChecked={true}
+            onChange={this.props.toggleState}
+          />
+        </div>
         {this.state.showCafes &&
           this.props.places
             .filter(place => place.categoryId === 2)
@@ -90,17 +108,26 @@ class Sidebar extends Component {
                 </div>
               )
             })}
-        <button
-          type="button"
-          className={
-            this.state.showBars
-              ? 'dropdown-btn dropdown-selected'
-              : 'dropdown-btn'
-          }
-          onClick={() => this.handleToggle('bars')}
-        >
-          Bars 🍷
-        </button>
+        <div className="sidenav-subheader">
+          <button
+            type="button"
+            className={
+              this.state.showBars
+                ? 'dropdown-btn dropdown-selected'
+                : 'dropdown-btn'
+            }
+            onClick={() => this.handleListToggle('bars')}
+          >
+            Bars 🍷
+          </button>
+          <input
+            type="checkbox"
+            id="bar"
+            name="Bar"
+            defaultChecked={true}
+            onChange={this.props.toggleState}
+          />
+        </div>
         {this.state.showBars &&
           this.props.places
             .filter(place => place.categoryId === 3)

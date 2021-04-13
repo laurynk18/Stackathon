@@ -8,6 +8,7 @@ const GET_PLACES = 'GET_PLACES'
 const GET_SINGLE_PLACE = 'GET_SINGLE_PLACE'
 const ADD_PLACE = 'ADD_PLACE'
 const UPDATE_PLACE = 'UPDATE_PLACE'
+const DELETE_PLACE = 'DELETE_PLACE'
 
 /*
  * ACTION CREATORS
@@ -16,6 +17,7 @@ const getPlaces = places => ({type: GET_PLACES, places})
 const getSinglePlace = place => ({type: GET_SINGLE_PLACE, place})
 const _addPlace = place => ({type: ADD_PLACE, place})
 const _updatePlace = place => ({type: UPDATE_PLACE, place})
+const _deletePlace = place => ({type: DELETE_PLACE, place})
 
 /**
  * THUNK CREATORS
@@ -80,10 +82,18 @@ export const updatePlace = place => {
         categoryId: categoryId
       })
       dispatch(_updatePlace(data))
-      history.push('/saved-places')
+      history.push('/pinned-places')
     } catch (error) {
       console.log('Error updating place from server', error)
     }
+  }
+}
+
+export const deletePlace = place => {
+  return async dispatch => {
+    await axios.delete(`/api/places/${place.id}`)
+    dispatch(_deletePlace(place))
+    history.push('/pinned-places')
   }
 }
 
@@ -99,16 +109,18 @@ export default function(state = initialState, action) {
     case GET_PLACES:
       return {...state, all: action.places}
     case GET_SINGLE_PLACE:
-      //return action.place
       return {...state, single: action.place}
     case ADD_PLACE:
-      //return [...state, action.place]
       return {...state, all: [...state.all, action.place]}
     case UPDATE_PLACE:
       return state.all.map(
         place => (place.id === action.place.id ? action.place : place)
       )
-    //return action.place
+    case DELETE_PLACE:
+      return {
+        ...state,
+        all: state.all.filter(place => place.id !== action.place.id)
+      }
     default:
       return state
   }
