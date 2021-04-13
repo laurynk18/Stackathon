@@ -267,7 +267,9 @@ textarea {
 }
 
 .edit-btn,
-.delete-btn {
+.delete-btn,
+.submit-btn,
+.auth-btn {
   background-color: black;
   border: solid 2px white;
   width: 20px;
@@ -283,17 +285,31 @@ textarea {
 }
 
 .edit-btn:hover,
-.delete-btn:hover {
+.delete-btn:hover,
+.submit-btn:hover,
+.auth-btn:hover {
   background-color: white;
   color: black;
+  cursor: pointer;
 }
 
 .place-list-header a {
   align-self: center;
 }
 
-.place-form {
+.form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form-content {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-family: 'Righteous-Regular';
+  font-size: large;
   color: white;
 }
 
@@ -307,4 +323,9 @@ textarea {
 .sidenav-subheader input {
   align-self: center;
   cursor: pointer;
+}
+
+.no-saved {
+  display: flex;
+  justify-content: center;
 }

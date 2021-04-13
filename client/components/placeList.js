@@ -67,7 +67,9 @@ class PlaceList extends Component {
             </div>
           ))
         ) : (
-          <div>You have no saved places!</div>
+          <div className="no-saved">
+            <h1>You have no saved places!</h1>
+          </div>
         )}
       </div>
     )

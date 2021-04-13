@@ -11,7 +11,7 @@ const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 const navControlStyle = {
   right: 30,
-  bottom: 10
+  bottom: 30
 }
 
 class Map extends Component {
