@@ -2,6 +2,8 @@
 
 An interactive map to pin your faves!
 
+Deployed link: https://pin-eat.herokuapp.com/
+
 ## Features
 
 * Sign up and Log in as a user
