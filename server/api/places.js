@@ -2,15 +2,16 @@ const router = require('express').Router()
 const {Place, Category} = require('../db/models')
 module.exports = router
 
-// gatekeeping
-// const currentUserOnly = (req, res, next) => {
-//   if (req.user && req.user.id === +req.params.userId) next()
-//   else {
-//     const err = new Error('Please sign up or log in!')
-//     err.status = 401
-//     next(err)
-//   }
-// }
+//gatekeeping
+const currentUserOnly = async (req, res, next) => {
+  const place = await Place.findByPk(req.params.placeId)
+  if (req.user && req.user.id === place.userId) next()
+  else {
+    const err = new Error('Please sign up or log in!')
+    err.status = 401
+    next(err)
+  }
+}
 
 // GET /api/places
 router.get('/', async (req, res, next) => {
@@ -28,7 +29,7 @@ router.get('/', async (req, res, next) => {
 })
 
 // GET /api/places/:placeId
-router.get('/:placeId', async (req, res, next) => {
+router.get('/:placeId', currentUserOnly, async (req, res, next) => {
   try {
     const place = await Place.findByPk(req.params.placeId, {
       include: [{model: Category}]
@@ -64,7 +65,7 @@ router.post('/', async (req, res, next) => {
 })
 
 // PUT /api/places/:placeId
-router.put('/:placeId', async (req, res, next) => {
+router.put('/:placeId', currentUserOnly, async (req, res, next) => {
   try {
     const place = await Place.findByPk(req.params.placeId, {
       include: [{model: Category}]
@@ -80,7 +81,7 @@ router.put('/:placeId', async (req, res, next) => {
 })
 
 // DELETE /api/places/:placeId
-router.delete('/:placeId', async (req, res, next) => {
+router.delete('/:placeId', currentUserOnly, async (req, res, next) => {
   try {
     const place = await Place.findByPk(req.params.placeId)
     console.log('place to delete!!', place)

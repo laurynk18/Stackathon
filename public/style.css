@@ -55,27 +55,9 @@ nav {
   align-items: center;
 }
 
-/* .landing-navItems {
-  display: flex;
-  flex-direction: row;
-  padding: 70px 30px 50px 0px;
-  font-family: 'Righteous-Regular';
-  font-size: 20px;
-  justify-content: space-between;
-  align-items: center;
-} */
-
-.navLeft .navRight {
-  flex-grow: 2;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.navRight {
-  padding-right: 30px;
-  justify-content: ;
+.nav-right {
+  padding-top: 12px;
+  padding-bottom: 2px;
 }
 
 li {
@@ -109,14 +91,20 @@ li {
   color: #f1f1f1;
   padding-right: 3%;
   padding-bottom: 8px;
-  font-family: Righteous-Regular;
-  margin-top: -2px;
+  font-family: 'Righteous-Regular';
+  margin-top: -1px;
 }
 
 .logo {
-  font-family: Righteous-Regular;
+  font-family: 'Righteous-Regular';
   padding-top: 30px;
   font-size: 42px;
+}
+
+.landing-logo {
+  font-family: 'Righteous-Regular';
+  font-size: 60px;
+  margin: 0;
 }
 
 .landing-container {
@@ -161,7 +149,6 @@ textarea {
   color: #f1f1f1;
 }
 
-/* Style the sidenav links and the dropdown button */
 .sidenav h1,
 .dropdown-selected {
   color: #f1f1f1;

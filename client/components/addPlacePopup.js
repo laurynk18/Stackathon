@@ -22,7 +22,6 @@ class AddPlacePopup extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  //track submitted in componentDidUpdate --> render "Added!"
 
   componentDidMount() {
     this.setState({
@@ -31,7 +30,6 @@ class AddPlacePopup extends Component {
         address: this.props.searchResult.result.place_name,
         location: this.props.searchResult.result.center
       }
-      //submitted: false,
     })
   }
 
@@ -68,7 +66,6 @@ class AddPlacePopup extends Component {
       rating: +this.state.placeInfo.rating,
       tag: this.state.placeInfo.tag && this.state.placeInfo.tag.split(',')
     })
-    //this.setState({submitted: true})
   }
 
   render() {

@@ -28,8 +28,7 @@ class PlaceEditForm extends Component {
       rating,
       note,
       tag,
-      categoryId,
-      category
+      categoryId
     } = this.props.place
     this.setState({
       name: name,
@@ -38,13 +37,11 @@ class PlaceEditForm extends Component {
       rating: rating,
       note: note || '',
       tag: tag || '',
-      // category: category.category
       category:
         categoryId === 1 ? 'Restaurant' : categoryId === 2 ? 'Cafe' : 'Bar'
     })
   }
   handleChange(evt) {
-    console.log('TAG', this.state.tag)
     this.setState({
       [evt.target.name]: evt.target.value
     })
