@@ -1,4 +1,4 @@
-# Mugs & Hugs
+# PinEat
 
 An interactive map to pin your faves!
 
